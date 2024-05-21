@@ -19,6 +19,7 @@ export default function App() {
         await axios.post('http://192.168.1.12:3001/tasks/', data)
         .then(response => {
             setTasks([...tasks, { ...data, _id: response.data._id }]);
+            getTask()
         })
         .catch(error => {
             console.log(error);
@@ -40,6 +41,7 @@ export default function App() {
         .then(() => {
             const updatedTasks = tasks.filter((task, idx) => idx !== index);
             setTasks(updatedTasks);
+            getTask()
         })
         .catch(error => {
             console.log(error);
@@ -51,6 +53,9 @@ export default function App() {
             done: taskData.done
         };
         await axios.put(`http://192.168.1.12:3001/tasks/${taskData._id}`, data)
+        .then(() =>{
+          getTask()
+        })
         .catch(error => {
             console.log(error);
         });
